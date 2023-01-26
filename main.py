@@ -32,12 +32,24 @@ def calendar(update, context):
     events = get_event()
     data=""
     for event in events:
-        my_event = f" Devise : {event['currency'] } {get_flag(event['currency'])} \n Heure : {event['time']}\n Evenement : {event['event']}\n Priorité : {('⭐️'*int(event['intensity']['priority']))}  \n\n"
-        data+=my_event
+        if int(event['intensity']['priority'])==3:
+            my_event = f" Devise : {event['currency'] } {get_flag(event['currency']) if get_flag(event['currency'])!=None else ''} \n Heure : {event['time']}\n Evenement : {event['event']}\n Priorité : {('⭐️'*int(event['intensity']['priority']))}  \n\n"
+            data+=my_event
     context.bot.send_message(chat_id=update.effective_chat.id, text=data)
 
 calendar_handler = CommandHandler("calendar", calendar)
 _dispatcher.add_handler(calendar_handler)
+
+def full_calendar(update, context):
+    events = get_event()
+    data=""
+    for event in events:
+        my_event = f" Devise : {event['currency'] } {get_flag(event['currency']) if get_flag(event['currency'])!=None else ''} \n Heure : {event['time']}\n Evenement : {event['event']}\n Priorité : {('⭐️'*int(event['intensity']['priority']))}  \n\n"
+        data+=my_event
+    context.bot.send_message(chat_id=update.effective_chat.id, text=data)
+
+full_calendar_handler = CommandHandler("full_calendar", full_calendar)
+_dispatcher.add_handler(full_calendar_handler)
 
 def get_flag(currency):
     if currency=='EUR':
@@ -63,6 +75,8 @@ def get_flag(currency):
         return "🇯🇵"
     elif currency=='GBP':
         return "🇬🇧"
+
+
 
 _updater.start_polling()
 _updater.idle()
