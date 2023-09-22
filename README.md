@@ -1,2 +1,2 @@
-# TFxF_Assistant
-The Forex Family Python Telegram Bot
+# investing_telegram_bot
+A simple telegram bot for daily economic calendar.
