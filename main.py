@@ -23,7 +23,7 @@ logging.basicConfig(
 
 
 def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello {} ! Ca cash j'espère. Je suis l'assistant Investing.tbot. Je t'aide à obtenir des informations relatifs aux marchés financier. \n 1 - Utilise la commande /calendar pour obtenir la liste des annonces économiques les plus importantes de la journée \n 2 - Utilise la commande full_calendar pour obtenir la liste complètes des annonces économiques de la journée".format(update.effective_user.first_name))
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello {} ! Ca cash j'espère. Je suis l'assistant Investing.tbot. Je t'aide à obtenir des informations relatifs aux marchés financier. \n\n\n 1- Utilise la commande /calendar pour obtenir la liste des annonces économiques les plus importantes de la journée \n\n 2- Utilise la commande /full_calendar pour obtenir la liste complètes des annonces économiques de la journée".format(update.effective_user.first_name))
 
 
 # set start command handler
@@ -39,6 +39,8 @@ def calendar(update, context):
         if int(event['intensity']['priority']) == 3:
             my_event = f" Devise : {event['currency'] } {get_flag(event['currency']) if get_flag(event['currency'])!=None else ''} \n Heure : {event['time']}\n Evenement : {event['event']}\n Priorité : {('⭐️'*int(event['intensity']['priority']))}  \n\n"
             data += my_event
+        else :
+            data = "Oups😕... Aucune donnée trouvée ! Tu devrais essayer la commande /full_calendar pour récupérer la liste complète."
     context.bot.send_message(chat_id=update.effective_chat.id, text=data)
 
 
